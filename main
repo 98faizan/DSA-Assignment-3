@@ -1,0 +1,168 @@
+#include <iostream>
+using namespace std;
+
+
+struct Node
+{
+    int rollNo;
+    string name;
+    Node* next;
+};
+
+class WaitingList
+{
+private:
+    Node* head;
+
+public:
+    
+    WaitingList()
+    {
+        head = NULL;
+    }
+
+  
+    void insertAtEnd(int rollNo, string name)
+    {
+        Node* newNode = new Node();
+        newNode->rollNo = rollNo;
+        newNode->name = name;
+        newNode->next = NULL;
+
+        if (head == NULL)
+        {
+            head = newNode;
+        }
+        else
+        {
+            Node* temp = head;
+
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+
+            temp->next = newNode;
+        }
+
+        cout << "Student Added Successfully!\n";
+    }
+
+   
+    void deleteByRollNo(int rollNo)
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty!\n";
+            return;
+        }
+
+        
+        if (head->rollNo == rollNo)
+        {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+
+            cout << "Student deleted successfully!\n";
+            return;
+        }
+
+        Node* current = head;
+        Node* previous = NULL;
+
+        while (current != NULL && current->rollNo != rollNo)
+        {
+            previous = current;
+            current = current->next;
+        }
+
+        if (current == NULL)
+        {
+            cout << "Student not found!\n";
+            return;
+        }
+
+        previous->next = current->next;
+        delete current;
+
+        cout << "Student deleted successfully!\n";
+    }
+
+   
+    void searchStudent(int rollNo)
+    {
+        Node* temp = head;
+
+        while (temp != NULL)
+        {
+            if (temp->rollNo == rollNo)
+            {
+                cout << "\nStudent Found:\n";
+                cout << "Roll No: " << temp->rollNo << endl;
+                cout << "Name: " << temp->name << endl;
+                return;
+            }
+
+            temp = temp->next;
+        }
+
+        cout << "Student not found!\n";
+    }
+
+    
+    void displayList()
+    {
+        if (head == NULL)
+        {
+            cout << "Waiting list is empty!\n";
+            return;
+        }
+
+        Node* temp = head;
+
+        cout << "\nWaiting List:\n";
+
+        while (temp != NULL)
+        {
+            cout << "Roll No: " << temp->rollNo
+                << " | Name: " << temp->name << endl;
+
+            temp = temp->next;
+        }
+    }
+
+    void countStudents()
+    {
+        int count = 0;
+        Node* temp = head;
+
+        while (temp != NULL)
+        {
+            count++;
+            temp = temp->next;
+        }
+
+        cout << "\nTotal Students: " << count << endl;
+    }
+};
+
+
+int main()
+{
+    WaitingList list;
+
+    list.insertAtEnd(101, "Ali");
+    list.insertAtEnd(102, "Ahmed");
+    list.insertAtEnd(103, "Sara");
+    list.insertAtEnd(104, "Hassan");
+    list.insertAtEnd(105, "Ayesha");
+
+    list.displayList();
+    list.searchStudent(103);
+    list.deleteByRollNo(102);
+    list.displayList();
+    list.countStudents();
+
+    return 0;
+}
