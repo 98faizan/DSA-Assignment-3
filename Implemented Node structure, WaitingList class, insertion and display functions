@@ -1,0 +1,58 @@
+struct Node
+{
+    int rollNo;
+    string name;
+    Node* next;
+};
+
+WaitingList()
+{
+    head = NULL;
+}
+
+void insertAtEnd(int rollNo, string name)
+{
+    Node* newNode = new Node();
+    newNode->rollNo = rollNo;
+    newNode->name = name;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+    }
+    else
+    {
+        Node* temp = head;
+
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
+    }
+
+    cout << "Student Added Successfully!\n";
+}
+
+void displayList()
+{
+    if (head == NULL)
+    {
+        cout << "Waiting list is empty!\n";
+        return;
+    }
+
+    Node* temp = head;
+
+    cout << "\nWaiting List:\n";
+
+    while (temp != NULL)
+    {
+        cout << "Roll No: " << temp->rollNo
+             << " | Name: " << temp->name << endl;
+
+        temp = temp->next;
+    }
+}
